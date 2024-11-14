@@ -2,8 +2,15 @@
 
 log_ram_usage() {
     while true; do
-        ram_usage=$(ps | grep rclone | grep -v grep | awk '{sum+=$5} END {print sum}')
-        ram_usage_mb=$((ram_usage / 1024))
+        rclone_pid=$(pgrep rclone)
+        if [ -z "$rclone_pid" ]; then
+            echo "Rclone process not found"
+            sleep 10
+            continue
+        fi
+
+        ram_usage_kb=$(grep VmRSS /proc/$rclone_pid/status | awk '{print $2}')
+        ram_usage_mb=$((ram_usage_kb / 1024))
         echo "RAM Usage: ${ram_usage_mb}MB"
         
         if [ "$ram_usage_mb" -gt 230 ]; then
