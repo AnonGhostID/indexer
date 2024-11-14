@@ -1,3 +1,22 @@
+#!/bin/bash
+
+log_ram_usage() {
+    while true; do
+        ram_usage=$(ps --no-headers -o rss -C rclone | awk '{sum+=$1} END {print sum}')
+        ram_usage_mb=$((ram_usage / 1024))
+        echo "RAM Usage: ${ram_usage_mb}MB"
+        
+        if [ "$ram_usage_mb" -gt 230 ]; then
+            echo "RAM usage exceeded 230MB, restarting rclone"
+            pkill rclone
+            sleep 5 # Give some time for rclone to terminate
+            eval "$CMD" &
+        fi
+
+        sleep 10 # Check RAM usage every 10 seconds
+    done
+}
+
 if command -v rclone &> /dev/null
 then
     echo "Rclone executable found (global)"
@@ -68,4 +87,6 @@ else
 fi
 
 echo "Running rclone index"
-eval $CMD
+eval "$CMD" &
+
+log_ram_usage
