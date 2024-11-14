@@ -13,8 +13,8 @@ log_ram_usage() {
         ram_usage_mb=$((ram_usage_kb / 1024))
         echo "RAM Usage: ${ram_usage_mb}MB"
         
-        if [ "$ram_usage_mb" -gt 230 ]; then
-            echo "RAM usage exceeded 230MB, restarting rclone"
+        if [ "$ram_usage_mb" -gt 256 ]; then
+            echo "RAM usage exceeded 256MB, restarting rclone"
             pkill rclone
             sleep 2 # Give some time for rclone to terminate
             eval "$CMD" &
