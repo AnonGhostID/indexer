@@ -2,7 +2,7 @@
 
 log_ram_usage() {
     while true; do
-        ram_usage=$(ps | grep rclone | grep -v grep | awk '{sum+=$4} END {print sum}')
+        ram_usage=$(ps | grep rclone | grep -v grep | awk '{sum+=$5} END {print sum}')
         ram_usage_mb=$((ram_usage / 1024))
         echo "RAM Usage: ${ram_usage_mb}MB"
         
