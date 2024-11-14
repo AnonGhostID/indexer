@@ -16,11 +16,11 @@ log_ram_usage() {
         if [ "$ram_usage_mb" -gt 230 ]; then
             echo "RAM usage exceeded 230MB, restarting rclone"
             pkill rclone
-            sleep 5 # Give some time for rclone to terminate
+            sleep 2 # Give some time for rclone to terminate
             eval "$CMD" &
         fi
 
-        sleep 10 # Check RAM usage every 10 seconds
+        sleep 3 # Check RAM usage every 10 seconds
     done
 }
 
