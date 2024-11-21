@@ -3,6 +3,10 @@
 	"description": "Deploy rclone index for your cloud storages easily",
 	"repository": "https://github.com/devolart/rclone-index",
 	"env": {
+		"BUILDPACK_NAME": {
+			"description": "PYTHON isinya",
+			"required": true
+		},
 		"CONFIG_BASE64": {
 			"description": "(Choose one between CONFIG_BASE64 or CONFIG_URL) Rclone config that has been encoded with base64. You can use https://emn178.github.io/online-tools/base64_encode.html to encode your rclone.conf content, copy the encoded config, and paste it to this variable.",
 			"required": false
